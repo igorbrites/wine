@@ -16,4 +16,4 @@ docker run -it \
     --user="wine" \
     --workdir=/home/wine/Apps \
     --net host \
-    --name wine wine:latest "$@"
+    --name wine igorbrites/wine:latest "$@"
