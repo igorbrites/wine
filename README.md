@@ -1,21 +1,31 @@
 # Running (Some) Windows Apps on Linux Using Wine from a Docker Container
 
-The need to this aproach came from the will to play [Hearthstone][1] on my Ubuntu 18.04, without installing all the hundreds of [Wine][2] dependencies.
+Instead of download ~600 dependencies on your Linux by installing Wine, try this image!
 
-So, inspired by [this post on LinuxConfig.org][3] on how to install it on Ubuntu, and [this post on ROS.org][4] on how to use Docker with XServer, and many other researches, I ended up with this image.
+The need to this aproach came from the will to play [Hearthstone](https://playhearthstone.com/) on my Ubuntu 18.04, without installing all the hundreds of [Wine](https://www.winehq.org/) dependencies.
+
+So, inspired by [this post on LinuxConfig.org](https://linuxconfig.org/how-to-install-blizzard-battle-net-app-on-ubuntu-18-04-bionic-beaver-linux) on how to install it on Ubuntu, and [this post on ROS.org](http://wiki.ros.org/docker/Tutorials/GUI#The_isolated_way) on how to use Docker with XServer, and many other researches, I ended up with this image.
+
+## Supported tags and respective `Dockerfile` links
+
+- [`5.2`, `staging`](https://github.com/igorbrites/wine/blob/master/5.2-staging/Dockerfile);
+- [`5.0`, `stable`, `latest`](https://github.com/igorbrites/wine/blob/master/5.0/Dockerfile);
+- [`4.5-staging`](https://github.com/igorbrites/wine/blob/master/4.5-staging/Dockerfile);
+- [`4.0`](https://github.com/igorbrites/wine/blob/master/4.0/Dockerfile);
+- [`base`](https://github.com/igorbrites/wine/blob/master/base/Dockerfile) (used by the other images).
 
 ## How to get it
 
-You can build it by cloning [the GitHub repo][5] and runing:
+You can build it by cloning [the GitHub repo](https://github.com/igorbrites/wine) and runing:
 
 ```bash
-docker build -t igorbrites/wine:latest .
+docker build -t igorbrites/wine[:version] .
 ```
 
-Or simply pulling ir from [Docker Hub][6]:
+Or simply pulling ir from [Docker Hub](https://hub.docker.com/r/igorbrites/wine):
 
 ```bash
-docker pull igorbrites/wine:latest
+docker pull igorbrites/wine[:version]
 ```
 
 ## How to use it
@@ -52,19 +62,11 @@ docker run -it \
     --workdir=/home/wine/Apps \
     --net host \
     --name wine \
-    igorbrites/wine:latest wine64 MyAwesomeApp.exe
+    igorbrites/wine[:version] wine64 MyAwesomeApp.exe
 ```
 
-Or, you can use the `run` script on the repo, that does exactly this :smile:
+Or, you can use the `run` script on the repo, that does exactly this using the `latest` version.
 
 ## Issues
 
 Once the app is installed, to run it is a little tricky. You can use `./run bash` to get inside the container ans check where your app was inatalled, and then run it with `wine64`. Or, if you already know where it is inside the container, you can run it by `./run wine64 /the/full/path/to/file.exe`.
-
-
-[1]: https://playhearthstone.com/ "HearthStone"
-[2]: https://www.winehq.org/ "WineHQ"
-[3]: https://linuxconfig.org/how-to-install-blizzard-battle-net-app-on-ubuntu-18-04-bionic-beaver-linux "How to Install Blizzard Battle.net App on Ubuntu 18.04 Bionic Beaver Linux"
-[4]: http://wiki.ros.org/docker/Tutorials/GUI#The_isolated_way "Using GUI's with Docker"
-[5]: https://github.com/igorbrites/wine "igorbrites/wine on GitHub"
-[6]: https://hub.docker.com/r/igorbrites/wine "igorbrites/wine on Docker Hub"
