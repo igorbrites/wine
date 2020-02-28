@@ -2,7 +2,7 @@ FROM igorbrites/wine:base
 
 ARG DEBIAN_FRONTEND="noninteractive"
 
-ARG WINE_VERSION=5.0.0
+ARG WINE_VERSION
 
 RUN set -x && \
     apt update && \
